@@ -1,5 +1,6 @@
 package com.whiteasher.simpleboard.board.dto;
 
+import com.whiteasher.simpleboard.auth.entity.UserPrincipal;
 import com.whiteasher.simpleboard.board.entity.Board;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -16,12 +17,14 @@ public class BoardDto {
         private Long no;
         private String title;
         private String content;
+        private Long userNo;
 
-        public Board toEntity() {
+        public Board toEntity(UserPrincipal userPrincipal) {
             return Board.builder()
                     .no(this.no)
                     .title(this.title)
                     .content(this.content)
+                    .user(UserPrincipal.toEntity(userPrincipal))
                     .build();
         }
     }
@@ -33,11 +36,13 @@ public class BoardDto {
         private final Long no;
         private final String title;
         private final String content;
+        private final Long userNo;
 
-        public Response(Board board) {
+        public Response(Board board, UserPrincipal userPrincipal) {
             this.no = board.getNo();
             this.title = board.getTitle();
             this.content = board.getContent();
+            this.userNo = userPrincipal.getNo();
         }
     }
 }

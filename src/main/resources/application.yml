@@ -16,17 +16,11 @@ spring:
       data-source-properties:
         rewriteBatchedStatements: true
     p6spy:
-      # JDBC ??? ??? ?? P6LogFactory ??
       enable-logging: true
-      # com.p6spy.engine.spy.appender.MultiLineFormat ?? (SingleLineFormat ??)
       multiline: true
-      # ?? ????? ?? ?? ?? [slf4j, sysout, file, custom]
       logging: slf4j
-      # ?? ??? '?'? ??? ???? SQL ???? ?? ???? ??
-      # ??: ? ??? ?? ???? ??? ?? ??
       tracing:
         include-parameter-values: true
-  # JPA ??
   jpa:
     database : mysql
     hibernate:
@@ -40,34 +34,94 @@ spring:
         use_sql_comments: true
     defer-datasource-initialization: true
     open-in-view: false
+  security:
+    oauth2.client:
+      registration:
+#        google:
+#          clientId: '{구글 client-id}'
+#          clientSecret: '{구글 client-secret}'
+#          scope:
+#            - email
+#            - profile
+#        facebook:
+#          clientId: '{페이스북 client-id}'
+#          clientSecret: '{페이스북 client-secret}'
+#          scope:
+#            - email
+#            - public_profile
+#        naver:
+#          clientId: '{네이버 client-id}'
+#          clientSecret: '{네이버 client-secret}'
+#          clientAuthenticationMethod: post
+#          authorizationGrantType: authorization_code
+#          redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+#          scope:
+#            - nickname
+#            - email
+#            - profile_image
+#          clientName: Naver
+        kakao:
+          clientId: ''
+          clientSecret: ''
+          clientAuthenticationMethod: client_secret_post
+          authorizationGrantType: authorization_code
+          redirectUri: http://localhost:8080/login/oauth2/code/kakao
+          scope:
+            - profile_nickname
+            - profile_image
+            - account_email
+          clientName: Kakao
+      # Provider 설정
+      provider:
+#        naver:
+#          authorizationUri: https://nid.naver.com/oauth2.0/authorize
+#          tokenUri: https://nid.naver.com/oauth2.0/token
+#          userInfoUri: https://openapi.naver.com/v1/nid/me
+#          userNameAttribute: response
+        kakao:
+          authorizationUri: https://kauth.kakao.com/oauth/authorize
+          tokenUri: https://kauth.kakao.com/oauth/token
+          userInfoUri: https://kapi.kakao.com/v2/user/me
+          userNameAttribute: id
+  data:
+    redis:
+      port: 6379
+      host: localhost
+      password: root
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 10
+          min-idle: 2
 
   http:
     media-type:
       default-charset: UTF-8
       default-content-type: application/json
 
-# cors ??
 cors:
   allowed-origins: 'http://localhost:3000'
   allowed-methods: GET,POST,PUT,DELETE,OPTIONS
   allowed-headers: '*'
   max-age: 3600
 
-# ?? ?? secret Key ? RedirectUri ??
-#token:
-#  auth:
-#    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
-#    accessTokenExpiry: 1800000
-#    refreshTokenExpiry: 604800000
-#    accessTokenHeaderName: "Authorization"
-#    accessTokenHeaderPrefix: "Bearer "
-#    refreshTokenName: "refresh_token"
-#  oauth2:
-#    authorizedRedirectUris:
-#      - http://localhost:3000/oauth/redirect
+token:
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    accessTokenExpiry: 1800000
+    refreshTokenExpiry: 604800000
+    accessTokenHeaderName: "Authorization"
+    accessTokenHeaderPrefix: "Bearer "
+    refreshTokenName: "refresh_token"
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:3000/oauth/redirect
 
 logging:
   level:
     root: info
     #org:
      # hibernate: info
+
+springdoc:
+  use-fqn: true
