@@ -10,7 +10,7 @@ public class HeaderUtil {
 
     public static String getAccessToken(HttpServletRequest request, String headerAuth, String tokenPrefix) {
         String headerValue = request.getHeader(headerAuth);
-        log.info("Access Token (HEADER) = {}", headerValue);
+        log.info("Access Token (HEADER-UTIL) = {}", headerValue);
         if (headerValue == null) {
             return null;
         }

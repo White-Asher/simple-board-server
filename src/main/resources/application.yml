@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:13341/boarddb
+    url: jdbc:mariadb://localhost:3310/boarddb
     username: root
     password: root
     hikari:
@@ -100,7 +100,7 @@ spring:
       default-content-type: application/json
 
 cors:
-  allowed-origins: 'http://localhost:3000'
+  allowed-origins: 'http://localhost:5173'
   allowed-methods: GET,POST,PUT,DELETE,OPTIONS
   allowed-headers: '*'
   max-age: 3600

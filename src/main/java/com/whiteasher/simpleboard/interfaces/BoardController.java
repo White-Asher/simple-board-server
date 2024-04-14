@@ -1,4 +1,4 @@
-package com.whiteasher.simpleboard.board.controller;
+package com.whiteasher.simpleboard.interfaces;
 
 import com.whiteasher.simpleboard.auth.service.UserService;
 import com.whiteasher.simpleboard.board.dto.BoardDto;

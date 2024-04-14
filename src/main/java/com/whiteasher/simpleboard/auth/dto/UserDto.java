@@ -1,6 +1,7 @@
 package com.whiteasher.simpleboard.auth.dto;
 
 import com.whiteasher.simpleboard.auth.entity.ProviderType;
+import com.whiteasher.simpleboard.auth.entity.RoleType;
 import com.whiteasher.simpleboard.auth.entity.UserPrincipal;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,16 @@ public class UserDto {
         private String email;
         private String nickname;
         private ProviderType providerType;
+
+        public static UserPrincipal toUserPrincipal(UserDto.Request request) {
+            return UserPrincipal.builder()
+                    .id(request.getId())
+                    .password(request.getPassword())
+                    .email(request.getEmail())
+                    .nickname(request.getNickname())
+                    .providerType(request.getProviderType())
+                    .build();
+        }
     }
 
     @Getter
@@ -30,6 +41,7 @@ public class UserDto {
         private String email;
         private String nickname;
         private ProviderType providerType;
+        private RoleType roleType;
 
         public Response (UserPrincipal userPrincipal) {
             this.no = userPrincipal.getNo();
@@ -38,6 +50,7 @@ public class UserDto {
             this.email = userPrincipal.getEmail();
             this.nickname = userPrincipal.getNickname();
             this.providerType = userPrincipal.getProviderType();
+            this.roleType = userPrincipal.getRoleType();
         }
     }
 

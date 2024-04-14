@@ -44,7 +44,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         String refreshToken = null;
 
         try {
-            log.info("STRING request : {}", request);
+            log.info("STRING request : {}", request.toString());
             // Header 에서 accessToken 정보를 가져온다.
             String accessToken = HeaderUtil.getAccessToken(request,
                     tokenProperties.getAuth().getAccessTokenHeaderName(),

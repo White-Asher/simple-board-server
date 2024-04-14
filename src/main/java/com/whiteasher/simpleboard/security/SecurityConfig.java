@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -33,7 +34,7 @@ import java.util.Arrays;
 
 @Slf4j
 @Configuration
-//@EnableWebSecurity(debug = true)
+// @EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CorsProperties corsProperties;
@@ -54,8 +55,8 @@ public class SecurityConfig {
             "/swagger-resources/**",
             "/proxy/**",
             "/error",
-            "/check",
             "/api/v1/login",
+            "/api/v1/users/resister"
     };
 
     @Bean
@@ -79,7 +80,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/management/**").hasRole("ADMIN")
+//                                .requestMatchers("/management/**").hasRole("ADMIN")
                                 .requestMatchers(permitAllRequestURL).permitAll()
                                 //.requestMatchers("/api/v1/**").hasRole(Role.USER.name())
                                 .anyRequest().authenticated())
@@ -189,6 +190,7 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource corsConfigSource = new UrlBasedCorsConfigurationSource();
 
         CorsConfiguration corsConfig = new CorsConfiguration();
+
         corsConfig.setAllowedHeaders(Arrays.asList(corsProperties.getAllowedHeaders().split(",")));
         corsConfig.setAllowedMethods(Arrays.asList(corsProperties.getAllowedMethods().split(",")));
         corsConfig.setAllowedOrigins(Arrays.asList(corsProperties.getAllowedOrigins().split(",")));
@@ -196,6 +198,7 @@ public class SecurityConfig {
         corsConfig.setMaxAge(corsConfig.getMaxAge());
         corsConfig.addExposedHeader("Authorization");
         corsConfigSource.registerCorsConfiguration("/**", corsConfig);
+        log.info("corsConfigSource : {}" , corsConfigSource);
         return corsConfigSource;
     }
 
